@@ -11,19 +11,19 @@ var queueMethods = {
   size: function(){
     return this._size;
   },
-  enqueue: function(val){
-    this._storage[this._size] = val;
+
+  enqueue: function(value){
+    this._storage[this._size] = value;
     this._size++;
   },
   dequeue: function(){
-    var result =  this._storage[0] || 0;
-
-    if (this._size){
-      this._size--;
+    var result = this._storage[0] ||  0;
+    if (result){
       for (var key in this._storage){
         this._storage[key] = this._storage[+key + 1];
       }
-      delete this._storage[this._size];
+      delete this._storage[key];
+      this._size--;
     }
 
     return result;

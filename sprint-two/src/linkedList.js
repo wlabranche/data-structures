@@ -4,16 +4,9 @@ var makeLinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
-    //var  val = {value: value, front: value, back: null}
-    var node = makeNode(value);
-
+    list.tail = makeNode(value);
     if (!list.head){
-      list.head = node;
-      list.tail = list.head;
-    }else{
-      //else add add new tail & make that head too
-      list.tail.next = node;
-      list.tail = node;
+      list.head = list.tail;
     }
   };
 
