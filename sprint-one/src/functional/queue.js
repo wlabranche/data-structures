@@ -19,7 +19,7 @@ var makeQueue = function(){
       storage[key] = storage[+key + 1];
     }
     size--;
-
+    delete storage[size];
     return result;
   };
 

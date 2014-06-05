@@ -124,8 +124,6 @@ define(['../../lib/chai/chai.js', '../../lib/underscore/underscore.js'], functio
 
         var declaresVariables = requireOption('declaresVariables');
         it(might('declare variables', declaresVariables), function(){
-          console.log(declaresVariables);
-          console.log(instantiator);
 
           assuming(declaresVariables).expect(/var /.test(instantiator)).to.be.true;
         });

@@ -20,7 +20,7 @@ var queueMethods = {
         this.storage[key] = this.storage[+key + 1];
       }
       this.len--;
-
+      delete this.storage[this.len];
       return result;
     }else{
       return 0;
