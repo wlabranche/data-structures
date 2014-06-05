@@ -14,12 +14,13 @@ Stack.prototype.push = function(value){
   this._size++;
 };
 Stack.prototype.pop = function(){
-  var result = 0;
+  var result = this._storage[this._size - 1] || 0;
+
   if (this._size){
     this._size--;
-    result = this._storage[this._size];
     delete this._storage[this._size];
   }
+
   return result;
 }
 

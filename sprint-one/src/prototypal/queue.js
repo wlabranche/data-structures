@@ -16,18 +16,18 @@ var queueMethods = {
     this._size++;
   },
   dequeue: function(){
+    var result =  this._storage[0] || 0;
+
     if (this._size){
       this._size--;
-      var result =  this._storage[0];
       for (var key in this._storage){
         this._storage[key] = this._storage[+key + 1];
       }
       delete this._storage[this._size];
     }
+
     return result;
   }
-
-
 };
 
 

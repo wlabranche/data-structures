@@ -12,23 +12,20 @@ var stackMethods = {
   size: function () {
     return this._size;
   },
-  pop: function() {
-    if(this._size) {
-      this._size--;
-    }
-    var result = this._storage[this._size];
-    delete this._storage[this._size];
-
-
-    return result;
-  },
   push: function(val){
     this._storage[this._size] = val;
     this._size++;
+  },
+  pop: function() {
+    var result = this._storage[this._size - 1] || 0;
+
+    if(this._size) {
+      this._size--;
+      delete this._storage[this._size];
+    }
+
+    return result;
   }
-
-
-
 };
 
 
