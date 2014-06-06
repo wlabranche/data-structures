@@ -1,63 +1,56 @@
 var makeBinarySearchTree = function(value){
-  var binaryTree = Object.create(binaryTreeMethods);
+  var binaryTree = Object.create(binaryMethods);
+  binaryTree.value = value;
   binaryTree.left = null;
   binaryTree.right = null;
-  binaryTree.value = value;
-
   return binaryTree;
 };
 
-binaryTreeMethods = {};
 
-binaryTreeMethods.insert = function(val){
-  var search = function (node) {
-    if (node.value < val) {
-      if (node.right){
-        search(node.right);
+var binaryMethods = {};
+
+binaryMethods.insert = function(value){
+  var search = function(node){
+    if (node.value > value){
+      if (node.left === null){
+        node.left = makeBinarySearchTree(value);
       }else{
-        node.right = makeBinarySearchTree(val);
-      }
-    }else if(node.value > val) {
-      if (node.left){
         search(node.left);
-      }else{
-        node.left = makeBinarySearchTree(val);
       }
-    }
+    }else if(node.value < value){
+      if (node.right === null){
+        node.right = makeBinarySearchTree(value);
+      }else{
+        search(node.right);
+      }
+    } 
   };
   search(this);
+  console.log(this);
 };
-binaryTreeMethods.contains = function(target){
+
+binaryMethods.contains = function(target){
   var result = false;
-  var search = function (node) {
-
-    if (node.value === target) {
+  var search = function(node){
+    if (node.value === target){
       result = true;
-    } else if (node.value < target && node.right){
-      search(node.right);
-    } else if (node.value > target && node.left){
-      search(node.left)
+    }else{
+      if (node.left){ search(node.left); }
+      if (node.right){ search(node.right); }
     }
-  };
-
+  }
   search(this);
   return result;
 };
-binaryTreeMethods.depthFirstLog = function(callback){
-  var search = function (node) {
-    callback(node.value);
-    if (node.left){
-      search(node.left);
-    }
-    if (node.right){
-      search(node.right);
-    }
-  };
+
+binaryMethods.depthFirstLog = function(func){
+  var search = function(node){
+    func(node.value);
+    if (node.left){ search(node.left); }
+    if (node.right){ search(node.right); }
+  }
   search(this);
 };
-
-
-
 
 
 
