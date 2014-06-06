@@ -7,7 +7,7 @@ var makeLinkedList = function(){
     var node = makeNode(value);
     
     if (!list.head){
-      list.head = list.tail = node
+      list.head = list.tail = node;
     }else{
       list.tail.next = node;
       list.tail = node;

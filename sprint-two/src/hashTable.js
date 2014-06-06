@@ -19,6 +19,7 @@ HashTable.prototype.insert = function(k, v){
   if (this._count > this._limit * 0.75){
     this.buildHash(this._limit * 2);
   }
+
 };
 
 HashTable.prototype.retrieve = function(k){
@@ -41,6 +42,7 @@ HashTable.prototype.retrieve = function(k){
 
 HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
+
   if (Array.isArray(this._storage.get(i))){
     this._storage.set(i, null);
   }else{
@@ -56,6 +58,7 @@ HashTable.prototype.remove = function(k){
   if (this._count < this._limit * 0.25){
     this.buildHash(this._limit * 0.5);
   }
+
 };
 
 HashTable.prototype.buildHash = function(limit){
