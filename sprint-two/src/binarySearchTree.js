@@ -26,7 +26,6 @@ binaryMethods.insert = function(value){
     } 
   };
   search(this);
-  console.log(this);
 };
 
 binaryMethods.contains = function(target){
