@@ -18,8 +18,6 @@ setPrototype.remove = function(item){
   if (this._storage[item]){
     delete this._storage[item];
   }
-  console.log(this._storage);
-  console.log(this._storage[item]);
 };
 
 /*
