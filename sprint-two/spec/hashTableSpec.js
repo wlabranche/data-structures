@@ -51,7 +51,7 @@ describe('hashTable', function() {
   });
 
   it('should halve in size when needed', function() {
-    _.each(people, function(person) {
+    _.each(people, function(person) { debugger
       var firstName = person[0], lastName = person[1];
       hashTable.insert(firstName,lastName);
     });

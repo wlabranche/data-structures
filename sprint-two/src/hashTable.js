@@ -1,37 +1,23 @@
 var HashTable = function(){
   this._limit = 8;
   this._storage = makeLimitedArray(this._limit);
+  this._count = 0;
 };
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  console.log(i);
-  //
+
   if (!this._storage.get(i)) {
     this._storage.set(i, [k, v]);
   }else{
     var temp = [this._storage.get(i)];
     temp.push([k, v]);
     this._storage.set(i, temp);
+  }
+  this._count++;
 
-
-    // var tempStore = [];
-    // // iterate through old store -> extract the arrays into temp store
-    // this._storage.each(function(element, pos, stor){
-    //   tempStore.push(element);
-    // });
-    // // calculate + assign new length
-    // this._limit *= 2;
-    // // build empty new hash + assign / replace the current one
-    // //
-    // this._storage = makeLimitedArray(this._limit);
-
-    // for(var index = 0; index < tempStore.length; index++){
-    //   //console.log('hellooo!!!')
-    //   this.insert(tempStore[index][0], tempStore[index][1]);
-    // }
-    // i = getIndexBelowMaxForKey(k, this._limit);
-    // this._storage.set(i, [k, v]);
+  if (this._count > this._limit * 0.75){
+    this.buildHash(this._limit * 2);
   }
 };
 
@@ -49,15 +35,47 @@ HashTable.prototype.retrieve = function(k){
       return this._storage.get(i)[1];
     }
   }else{
-    return this._storage.get(i);
+    return null;
   }
 };
 
 HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(i, null);
+  if (Array.isArray(this._storage.get(i))){
+    this._storage.set(i, null);
+  }else{
+    var temp = this._storage.get(i);
+    for (var index = 0; index < temp.length; index++){
+      if (temp[index][0] === k){
+        this._storage.set(temp[index][0], null);
+      }
+    }
+  }
+  this._count--;
+
+  if (this._count < this._limit * 0.25){
+    this.buildHash(this._limit * 0.5);
+  }
 };
 
+HashTable.prototype.buildHash = function(limit){
+  var newHashTable = new HashTable();
+  newHashTable._limit = limit;
+  newHashTable._storage = makeLimitedArray(limit);
+  this._storage.each(function(pair){
+    if (pair) {
+      if (Array.isArray(pair[0])) {
+        for (var i = 0; i < pair.length; i++) {
+          newHashTable.insert(pair[i][0], pair[i][1]);
+        }
+      } else {
+        newHashTable.insert(pair[0], pair[1]);
+      }
+    }
+  });
+  this._storage = newHashTable._storage;
+  this._limit = limit;
+};
 
 
 /*
